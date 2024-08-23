@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<body>
+    <h2>Protein Dashboard</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Protein ID</th>
+                <th>SAP Addresses</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for protein in proteins %}
+                <tr>
+                    <td>{{ protein.protein_id }}</td>
+                    <td>
+                        {% if protein.sap_addresses.all %}
+                            <ul>
+                                {% for sap in protein.sap_addresses.all %}
+                                    <li>{{ sap.sap_address }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <em>No SAPs</em>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <form action="{% url 'delete_protein' protein.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+{% endblock content %}

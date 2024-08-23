@@ -1,0 +1,5 @@
+biopython
+django
+requests
+psycopg2
+pillow
